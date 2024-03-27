@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multiple Predictions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='multiple.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.5.2/cdn/css/ionicons.min.css">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="home-icon-link">
+            <img src="{{ url_for('static', filename='home.png') }}" alt="Home Icon">
+        </a>        
+        <h1>Upload CSV for Multiple Predictions</h1>
+        <form action="/multipleprediction" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button type="submit">Predict</button>
+        </form>        
+        {% if predictions %}
+        <h2>Predictions</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Entry Date</th>
+                        <th>Quarter</th>
+                        <th>Team</th>
+                        <th>Targeted Productivity</th>
+                        <th>SMV</th>
+                        <th>Over Time</th>
+                        <th>Incentive</th>
+                        <th>Idle Time</th>
+                        <th>Idle Men</th>
+                        <th>Style Changes</th>
+                        <th>Workers</th>
+                        <th>Dept Finishing</th>
+                        <th>Dept Sweing</th>
+                        <th>Predicted Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prediction in predictions %}
+                    <tr>
+                        <td>{{ "{}-{}-{}".format(prediction.entry_year, prediction.entry_month, prediction.entry_day) }}</td>
+                        <td>{{ prediction.quarters }}</td>
+                        <td>{{ prediction.team }}</td>
+                        <td>{{ prediction.targeted_productivity }}</td>
+                        <td>{{ prediction.smv }}</td>
+                        <td>{{ prediction.over_time }}</td>
+                        <td>{{ prediction.incentive }}</td>
+                        <td>{{ prediction.idle_time }}</td>
+                        <td>{{ prediction.idle_men }}</td>
+                        <td>{{ prediction.no_of_style_change }}</td>
+                        <td>{{ prediction.no_of_workers }}</td>
+                        <td>{{ prediction.dept_finishing }}</td>
+                        <td>{{ prediction.dept_sweing }}</td>
+                        <td>{{ (prediction.prediction * 100)|round }}</td>
+                    </tr>
+                {% endfor %}                
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

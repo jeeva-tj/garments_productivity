@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Garments Manufacturing Co.</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to Garments Manufacturing Co.</h1>
+        </div>
+        <div class="description">
+            <p>Garments Manufacturing Co. is a leading player in the global apparel industry, 
+                with world-class manufacturing facilities and a reputation for excellence. 
+                Our product range includes high-fashion wear for men, women, and children. 
+                From sourcing the finest fabrics to adhering to strict quality control measures, 
+                we ensure that every garment we produce stands out in the global market.</p>
+            
+        </div>
+        <div class="growth-description">
+            <h2>Our Growth Journey</h2>
+            <p>Since our establishment, Garments Manufacturing Co. has experienced exponential growth, both in terms of revenue and product sales. This growth has been a testament to our commitment to quality, innovation, and customer satisfaction. Our data speaks for itself, illustrating our ascension in the apparel industry over the years.</p>
+            <p>Our charts below showcase our yearly revenue growth and a breakdown of our product sales for the year 2023. It's evident that our diversified product range has been instrumental in driving consistent growth.</p>
+        </div>
+
+        <!-- Menu -->
+        <div class="menu">
+            <button class="menu-button" onclick="location.href='/singleparameter';">Single Prediction</button>
+            <button class="menu-button" onclick="location.href='/multipleprediction';">Multiple Prediction</button>
+        </div>
+
+
+        <!-- Charts in the same row -->
+        <div class="chart-row">
+            <div class="chart-container">
+                <h2>Yearly Revenue Growth</h2>
+                <canvas id="revenueChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Product Sales (2023)</h2>
+                <canvas id="salesChart"></canvas>
+            </div>
+        </div>
+
+
+        <script>
+            // Data for Revenue Growth Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2018','2019', '2020', '2021', '2022', '2023'],
+                    datasets: [{
+                        label: 'Revenue (in millions)',
+                        data: [80,50, 60, 85, 100, 130], // sample data
+                        borderColor: '#3498db',
+                        fill: false,
+                    }],
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Data for Product Sales Chart
+            const salesCtx = document.getElementById('salesChart').getContext('2d');
+            const salesChart = new Chart(salesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['T-Shirts', 'Jeans', 'Jackets', 'Lehanga', 'Shoes'],
+                    datasets: [{
+                        label: 'Number of items sold',
+                        data: [5000, 4000, 1500, 6500, 3800], // sample data
+                        backgroundColor: [
+                            '#e74c3c',
+                            '#3498db',
+                            '#f39c12',
+                            '#2ecc71',
+                            '#9b59b6'
+                        ]
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+</body>
+
+</html>

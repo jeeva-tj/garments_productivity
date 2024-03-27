@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Workers Productivity</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='singleparameter.css') }}">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="home-icon-link">
+            <img src="{{ url_for('static', filename='home.png') }}" alt="Home Icon">
+        </a>   
+        <h1>WORKERS PRODUCTIVITY</h1>
+        <form action="/singleparameter" method="POST">
+            <div class="double-input-group">
+                <div class="input-group">
+                    <label for="entry_date">Date:</label>
+                    <input type="date" name="entry_date" id="entry_date" value="{% if last_data %}{{ last_data.entry_date }}{% else %}{{ current_date }}{% endif %}">
+                </div>
+                <div class="input-group">
+                    <label for="quarter">Quarter:</label>
+                    <select name="quarter" id="quarter">
+                        <option value="Quarter 1" {% if last_data and last_data.quarters == 'Quarter 1' %}selected{% endif %}>Quarter 1</option>
+                        <option value="Quarter 2" {% if last_data and last_data.quarters == 'Quarter 2' %}selected{% endif %}>Quarter 2</option>
+                        <option value="Quarter 3" {% if last_data and last_data.quarters == 'Quarter 3' %}selected{% endif %}>Quarter 3</option>
+                        <option value="Quarter 4" {% if last_data and last_data.quarters == 'Quarter 4' %}selected{% endif %}>Quarter 4</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="double-input-group">
+                <div class="input-group">
+                    <label for="department">Department:</label>
+                    <select name="department" id="department">
+                        <option value="Finishing" {% if last_data and last_data.dept_finishing == 1 %}selected{% endif %}>Finishing</option>
+                        <option value="Sweing" {% if last_data and last_data.dept_sweing == 1 %}selected{% endif %}>Sweing</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="team">Team:</label>
+                    <input type="number" pattern="\d+" name="team" id="team" value="{% if last_data %}{{ last_data.team }}{% else %}1{% endif %}">
+                </div>
+            </div>
+
+            <div class="double-input-group">
+                <div class="input-group">
+                    <label for="targeted_productivity">Targeted Productivity:</label>
+                    <input type="number" step="0.1" name="targeted_productivity" id="targeted_productivity" value="{% if last_data %}{{ last_data.targeted_productivity }}{% else %}0.7{% endif %}">
+                </div>
+                <div class="input-group">
+                    <label for="smv">SMV:</label>
+                    <input type="number" step="0.1" name="smv" id="smv" value="{% if last_data %}{{ last_data.smv }}{% else %}15{% endif %}">
+                </div>
+            </div>
+
+            <div class="double-input-group">
+                <div class="input-group">
+                    <label for="over_time">Over Time:</label>
+                    <input type="number" pattern="\d+" name="over_time" id="over_time" value="{% if last_data %}{{ last_data.over_time|int }}{% else %}100000{% endif %}">
+                </div>                
+                <div class="input-group">
+                    <label for="incentive">Incentive:</label>
+                    <input type="number" pattern="\d+" name="incentive" id="incentive" value="{% if last_data %}{{ last_data.incentive }}{% else %}0{% endif %}">
+                </div>
+            </div>
+
+            <div class="double-input-group">
+                <div class="input-group">
+                    <label for="idle_time">Idle Time:</label>
+                    <input type="number" pattern="\d+" name="idle_time" id="idle_time" value="{% if last_data %}{{ last_data.idle_time }}{% else %}0{% endif %}">
+                </div>
+                <div class="input-group">
+                    <label for="idle_men">Idle Men:</label>
+                    <input type="number" pattern="\d+" name="idle_men" id="idle_men" value="{% if last_data %}{{ last_data.idle_men|int }}{% else %}0{% endif %}">
+                </div>
+            </div>
+
+            <div class="double-input-group">
+                <div class="input-group">
+                    <label for="no_of_style_change">No. of Style Change:</label>
+                    <input type="number" pattern="\d+" name="no_of_style_change" id="no_of_style_change" value="{% if last_data %}{{ last_data.no_of_style_change }}{% else %}1{% endif %}">
+                </div>
+                <div class="input-group">
+                    <label for="no_of_workers">No. of Workers:</label>
+                    <input type="number" pattern="\d+" name="no_of_workers" id="no_of_workers" value="{% if last_data %}{{ last_data.no_of_workers }}{% else %}10{% endif %}">
+                </div>
+            </div>
+
+            <button type="submit">PREDICT</button>
+        </form>
+
+        {% if prediction %}
+            <p>PREDICTED PRODUCTIVITY: {{ prediction|round(2) }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
